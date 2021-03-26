@@ -312,7 +312,7 @@ let get_parse_error env =
     | lazy Nil -> "Invalid syntax"
     | lazy (Cons (I.Element (state, _, _, _), _)) ->
         try (Parser_messages.message (I.number state)) with
-        | _ -> "invalid syntax (no specific message for this eror)"
+        | _ -> "invalid syntax (no specific message for this error)"
 
 
 (** [parse_with_error] parses [lexbuf] as a program or fails with a syntax error *)

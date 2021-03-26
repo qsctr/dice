@@ -44,7 +44,7 @@ type eexpr =
   | Observe of source * eexpr
   | Ident of source * String.t
   | Discrete of source * float List.t
-  | Int of source * int * int (* value, size *)
+  | Int of source * int * int (* size, value *)
   | Eq of source * eexpr * eexpr
   | LeftShift of source * eexpr * int
   | RightShift of source * eexpr * int

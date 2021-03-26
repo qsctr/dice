@@ -441,14 +441,14 @@ let rec type_of (ctx: typ_ctx) (env: EG.tenv) (e: EG.eexpr) : tast =
                                                    '%s' during typechecking, found %s "
                                      s.startpos.pos_lnum (get_col s.startpos) id (string_of_typ res)))) in
     let zipped = try List.zip_exn args targ
-      with _ -> raise (Type_error (Format.sprintf "Type error at line %d column %d: could incompatible argument length, expected \
+      with _ -> raise (Type_error (Format.sprintf "Type error at line %d column %d: incompatible argument length, expected \
                                                    %d arguments and got %d arguments"
                                      s.startpos.pos_lnum (get_col s.startpos) (List.length targ) (List.length args))) in
     let arg' = List.mapi zipped ~f:(fun idx (arg, typ) ->
         let (found_t, body) = type_of ctx env arg in
         if (type_eq found_t typ) then (found_t, body) else
           raise (Type_error (Format.sprintf "Type error in argument %d at line %d column %d: expected type %s, got %s"
-                               s.startpos.pos_lnum (get_col s.startpos) (idx + 1) (string_of_typ typ) (string_of_typ found_t)))
+                               (idx + 1) s.startpos.pos_lnum (get_col s.startpos) (string_of_typ typ) (string_of_typ found_t)))
       ) in
     (tres, FuncCall(s, id, arg'))
   | IntConst(_, _) -> failwith "Internal Error: unstripped int const"
